@@ -1,0 +1,78 @@
+{
+  "name": "personal-workstation-concept",
+  "description": "连接目标任务、创作发布、Obsidian 知识库与私人 AI 的本地工作站。",
+  "author": "小黄",
+  "private": true,
+  "version": "0.7.0",
+  "type": "module",
+  "main": "electron/main.mjs",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "desktop:dev": "npm run build && electron electron/main.mjs",
+    "desktop:pack": "npm run build && electron-builder --dir --win --x64",
+    "desktop:dist": "npm run build && electron-builder --win --x64"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.4.1",
+    "vite": "^6.4.3"
+  },
+  "devDependencies": {
+    "@fluentui/react-components": "^9.74.4",
+    "@fluentui/react-icons": "^2.0.334",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@xyflow/react": "^12.11.2",
+    "electron": "^43.4.0",
+    "electron-builder": "26.15.3",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "typescript": "^7.0.2"
+  },
+  "overrides": {
+    "nanoid": "3.3.18"
+  },
+  "build": {
+    "appId": "cn.xiaohuang.workstation",
+    "productName": "小黄的工作站",
+    "asar": false,
+    "electronDist": "node_modules/electron/dist",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "demo-vault/**/*",
+      "build/icon.png",
+      "vite.config.ts",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "signExecutable": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "小黄的工作站-安装包-${version}.${ext}",
+      "legalTrademarks": "小黄的工作站"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "include": "build/installer.nsh",
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "小黄的工作站"
+    }
+  }
+}
